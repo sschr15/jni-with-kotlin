@@ -10,13 +10,6 @@ fun lsdRadixSort(array: CPointer<IntVar>) {
     val size = array[0]
     if (size <= 1) return
 
-//    var max = array[1]
-//    for (i in 2..size) {
-//        if (array[i] > max) {
-//            max = array[i]
-//        }
-//    }
-
     repeat(4) {
         val exp = 1 shl (it * 4) // 1, 16, 256, 4096
         countingSort(array, size, exp)
@@ -43,6 +36,6 @@ private fun countingSort(array: CPointer<IntVar>, size: Int, exp: Int) = memScop
         output[count[index]--] = array[i]
     }
 
-    memcpy(array, output, (size.toULong() + 1u) * sizeOf<IntVar>().toULong())
+    memcpy(array + 1, output + 1, size.toULong() * sizeOf<IntVar>().toULong())
 }
 
